@@ -1,0 +1,39 @@
+3
+6
+1
+0
+0
+0
+0
+0
+1
+1
+1
+0
+1
+1
+2
+0
+2
+1
+0
+2
+2
+1
+
+
+
+
+node nr
+edge nr
+final states nr
+final states (as many as final "states nr"):
+.
+.
+.
+.
+.
+repeat for every edge:
+from edge
+to edge
+what is on edge
