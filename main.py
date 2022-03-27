@@ -1,9 +1,6 @@
-dfa = {}
-states = {}
-
-def read_dfa():
+def read_dfa(dfa, states):
     fin = open("dfa.txt")
-    global dfa, states
+    # global dfa, states
     nodeNr = int(fin.readline().strip())
     edgeNr = int(fin.readline().strip())
     finalStates = int(fin.readline().strip())
@@ -21,31 +18,47 @@ def read_dfa():
         else:
             dfa[fromNode].append((toNode, onEdge))
 
-done = 0
+    return [dfa, states]
 
-def verify_dfa(node, word):
-    global states, dfa, done
-    if word == []:
-        if(states[node] == 1):
+
+def verify_dfa(node, word, states, dfa, done):
+    # global states, dfa, done
+    # if word == []:
+    if not word:
+        if states[node] == 1:
             print(".ACCEPTED.")
-            done = 1
+            # done = 1
+            return 1
+        else:
+            return 0
     else:
         for edge in dfa[node]:
             if edge[1] == word[0]:
                 if done == 0:
                     path.append(edge[0])
-                    verify_dfa(edge[0], word[1:])
+                    done = verify_dfa(edge[0], word[1:], states, dfa, done)
+                else:
+                    return 1
+
+    return done
 
 
-### main ###
-read_dfa()
-print(dfa)
-print(states)
+if __name__ == '__main__':
+    dfa = {}
+    states = {}
+    done = 0
 
-word = list(input("Word to verify: "))
-path = []
-path.append(0)
-verify_dfa(0, word)
-if done == 0:
-    print(".NOT ACCEPTED.")
-print(path)
+    (dfa, states) = read_dfa(dfa, states)
+    print(dfa)
+    print(states)
+
+    word = list(input("Word to verify: "))
+    # path = []
+    # path.append(0)
+    path = [0]
+
+    done = verify_dfa(0, word, states, dfa, done)
+    if done == 0:
+        print(".NOT ACCEPTED.")
+    else:
+        print(path)
